@@ -7,7 +7,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'Booking nails master',
       theme: ThemeData(
         // This is the theme of your application.
         //
@@ -20,10 +20,81 @@ class MyApp extends StatelessWidget {
         // is not restarted.
         primarySwatch: Colors.blue,
       ),
-      home: MyHomePage(title: 'Flutter Demo Home Page'),
+      home: Login(),
     );
   }
 }
+
+class Login extends StatefulWidget{
+  @override
+  State<StatefulWidget> createState() => LoginState();
+}
+
+class LoginState extends State {
+
+  final _formKey = GlobalKey<FormState>();
+
+  Widget build(BuildContext context) {
+    return Scaffold
+      (
+        appBar: new AppBar(title: new Text('Авторизация')),
+        body:
+      Container(
+        margin: const EdgeInsets.only(left: 20.0, right: 20.0),
+          padding: EdgeInsets.all(10.0),
+          child: new Form(key: _formKey, child: new Column(children:  <Widget>[
+            new Row(children: [
+              Expanded(
+                flex: 2,
+                child:
+              new Text('Имя пользователя:', style: TextStyle(fontSize: 16.0),),
+              ),
+              Expanded(
+                flex: 3,
+                child:
+              new TextFormField(validator: (value) {
+                if (value.isEmpty) return 'Пожалуйста введите свое имя';
+              }),
+              ),
+            ]),
+            new Row(children: [
+              Expanded(
+                flex: 2,
+                child:
+                new Text('Пароль:', style: TextStyle(fontSize: 16.0),),
+              ),
+              Expanded(
+                flex: 3,
+                child:
+                new TextFormField(validator: (value) {
+                  if (value.isEmpty) return 'Пожалуйста введите пароль';
+                }),
+              ),
+            ]),
+
+
+            new SizedBox(height: 50.0),
+
+
+
+
+            new SizedBox(
+              width: double.infinity,
+              child: new RaisedButton(onPressed: () {
+                if (_formKey.currentState.validate()) Scaffold.of(context)
+                    .showSnackBar(SnackBar(
+                  content: Text('Форма успешно заполнена'),
+                  backgroundColor: Colors.green,));
+              },
+                child: Text('Войти'),
+                color: Colors.blue,
+                textColor: Colors.white,),
+            ),
+
+          ],)))
+    );}
+  }
+
 
 class MyHomePage extends StatefulWidget {
   MyHomePage({Key key, this.title}) : super(key: key);
