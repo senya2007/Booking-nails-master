@@ -4,6 +4,7 @@ void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
   // This widget is the root of your application.
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -20,7 +21,69 @@ class MyApp extends StatelessWidget {
         // is not restarted.
         primarySwatch: Colors.blue,
       ),
-      home: Login(),
+      home: Start()
+    );
+  }
+}
+
+class Start extends StatefulWidget{
+  @override
+  State<StatefulWidget> createState() => StartState();
+}
+
+class StartState extends State{
+
+
+  Widget build(BuildContext context){
+    return Scaffold(
+          body: Center(
+          child: new ListView(
+              shrinkWrap: true,
+              padding: const EdgeInsets.all(20.0),
+              children: [
+                Center(child: new Column(
+                  children: <Widget>[
+                    new FlatButton(onPressed:  () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => LoginView()),
+                      );
+                    }, child: new Text('Войти')),
+                    new FlatButton(onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => LoginView()),
+                      );
+                    }, child: new Text('Зарегистрироваться'))
+                  ],
+                ),)
+              ]
+          ),
+        )
+    );
+  }
+}
+
+class LoginView extends StatelessWidget {
+  // This widget is the root of your application.
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+        title: 'Войти',
+        theme: ThemeData(
+          // This is the theme of your application.
+          //
+          // Try running your application with "flutter run". You'll see the
+          // application has a blue toolbar. Then, without quitting the app, try
+          // changing the primarySwatch below to Colors.green and then invoke
+          // "hot reload" (press "r" in the console where you ran "flutter run",
+          // or simply save your changes to "hot reload" in a Flutter IDE).
+          // Notice that the counter didn't reset back to zero; the application
+          // is not restarted.
+          primarySwatch: Colors.blue,
+        ),
+        home: Login()
     );
   }
 }
@@ -40,60 +103,115 @@ class LoginState extends State {
         appBar: new AppBar(title: new Text('Авторизация')),
         body:
       Container(
-        margin: const EdgeInsets.only(left: 20.0, right: 20.0),
-          padding: EdgeInsets.all(10.0),
-          child: new Form(key: _formKey, child: new Column(children:  <Widget>[
-            new Row(children: [
-              Expanded(
-                flex: 2,
-                child:
-              new Text('Имя пользователя:', style: TextStyle(fontSize: 16.0),),
-              ),
-              Expanded(
-                flex: 3,
-                child:
-              new TextFormField(validator: (value) {
-                if (value.isEmpty) return 'Пожалуйста введите свое имя';
-              }),
-              ),
-            ]),
-            new Row(children: [
-              Expanded(
-                flex: 2,
-                child:
-                new Text('Пароль:', style: TextStyle(fontSize: 16.0),),
-              ),
-              Expanded(
-                flex: 3,
-                child:
-                new TextFormField(validator: (value) {
-                  if (value.isEmpty) return 'Пожалуйста введите пароль';
-                }),
-              ),
-            ]),
+          child: new Form(key: _formKey, child: new Stack(children:  <Widget>[
+            new Container(
+              padding: EdgeInsets.all(10.0),
+              margin: const EdgeInsets.only(left: 20.0, right: 20.0),
+              child: new Column(children: <Widget>[
+                new Row(children: [
+                  Expanded(
+                    flex: 2,
+                    child:
+                    new Text('Имя пользователя:', style: TextStyle(fontSize: 16.0),),
+                  ),
+                  Expanded(
+                    flex: 3,
+                    child:
+                    new TextFormField(validator: (value) {
+                      if (value.isEmpty) return 'Пожалуйста введите свое имя';
+                    }),
+                  ),
+                ]),
+                new Row(children: [
+                  Expanded(
+                    flex: 2,
+                    child:
+                    new Text('Пароль:', style: TextStyle(fontSize: 16.0),),
+                  ),
+                  Expanded(
+                    flex: 3,
+                    child:
+                    new TextFormField(validator: (value) {
+                      if (value.isEmpty) return 'Пожалуйста введите пароль';
+                    }),
+                  ),
+                ]),
+              ],),
+            ),
+
 
 
             new SizedBox(height: 50.0),
 
+            new Positioned(child: new Align(
+              alignment: FractionalOffset.bottomCenter,
+              child: new SizedBox(
+                width: double.infinity,
+                height: 50,
+                child: new FlatButton(onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => HomePage()),
+                  );
+                },
+                  child: Text('Войти'),
+                  color: Colors.blue,
+                  textColor: Colors.white,),
+              ),
+            )),
 
-
-
-            new SizedBox(
-              width: double.infinity,
-              child: new RaisedButton(onPressed: () {
-                if (_formKey.currentState.validate()) Scaffold.of(context)
-                    .showSnackBar(SnackBar(
-                  content: Text('Форма успешно заполнена'),
-                  backgroundColor: Colors.green,));
-              },
-                child: Text('Войти'),
-                color: Colors.blue,
-                textColor: Colors.white,),
-            ),
 
           ],)))
     );}
   }
+
+class HomePage extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return new MaterialApp(
+      color: Colors.yellow,
+      home: DefaultTabController(
+        length: 4,
+        child: new Scaffold(
+          body: TabBarView(
+            children: [
+              new Container(
+                color: Colors.yellow,
+              ),
+              new Container(color: Colors.orange,),
+              new Container(
+                color: Colors.lightGreen,
+              ),
+              new Container(
+                color: Colors.red,
+              ),
+            ],
+          ),
+          bottomNavigationBar: new TabBar(
+            tabs: [
+              Tab(
+                icon: new Icon(Icons.home),
+              ),
+              Tab(
+                icon: new Icon(Icons.rss_feed),
+              ),
+              Tab(
+                icon: new Icon(Icons.perm_identity),
+              ),
+              Tab(icon: new Icon(Icons.settings),)
+            ],
+            labelColor: Colors.yellow,
+            unselectedLabelColor: Colors.blue,
+            indicatorSize: TabBarIndicatorSize.label,
+            indicatorPadding: EdgeInsets.all(5.0),
+            indicatorColor: Colors.red,
+          ),
+          backgroundColor: Colors.black,
+        ),
+      ),
+    );
+  }
+}
 
 
 class MyHomePage extends StatefulWidget {
